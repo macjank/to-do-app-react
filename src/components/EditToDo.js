@@ -1,4 +1,3 @@
-import styles from "./css/EditToDo.module.css";
 import Modal from "./UI/Modal";
 import { useDispatch } from "react-redux";
 import { todosActions } from "../store";
