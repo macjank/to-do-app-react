@@ -54,7 +54,7 @@ const TodoList = ({ done, header, todos, category, onChangeCat }) => {
       <div className={styles.header}>
         <div className={styles.title} onClick={handleToggleList}>
           <p>
-            {header} ({numOfTodos})
+            {header} ( {numOfTodos} )
           </p>
           {arrowIcon}
         </div>
