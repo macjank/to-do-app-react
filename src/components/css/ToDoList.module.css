@@ -2,11 +2,20 @@
   padding: 1em;
 }
 
-.todosContainer h3 {
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+}
+
+.title {
   color: #fff;
   font-weight: 100;
-  text-align: left;
-  padding-left: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 .list {
@@ -19,6 +28,7 @@
   padding: 1em;
 }
 
-.arrowIcon {
-  cursor: pointer;
+.filter {
+  height: 3em;
+  width: 10em;
 }
