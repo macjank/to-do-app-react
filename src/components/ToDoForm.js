@@ -133,9 +133,9 @@ const ToDoForm = ({
           onChange={e => setCategory(e.target.value)}
         >
           <option value="">--Select a category--</option>
-          <option value="work">For Work</option>
-          <option value="home">For Home</option>
-          <option value="to-buy">To buy</option>
+          <option value="work">work</option>
+          <option value="home">home</option>
+          <option value="to buy">to buy</option>
         </select>
       </div>
       <div className={styles.btnContainer}>
