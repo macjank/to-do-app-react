@@ -1,44 +1,71 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import styles from "./css/ToDoList.module.css";
 import ToDoItem from "./ToDoItem";
-import { getTodosData, sendTodosData } from "../store/todosActions";
+import styles from "./css/TodoList.module.css";
+import Card from "./UI/Card";
+import { arrowDown, arrowUp } from "../helpers/icons";
+import { useState } from "react";
+import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
-let firstRun = true;
+const TodoList = ({ done, header, todos }) => {
+  const [isListVisible, setIsListVisible] = useState(done ? false : true);
 
-const ToDoList = () => {
-  const todos = useSelector(state => state.todos);
-  const dispatch = useDispatch();
+  const handleToggleList = () => {
+    setIsListVisible(prevState => !prevState);
+  };
 
-  useEffect(() => {
-    dispatch(getTodosData());
-  }, []);
+  const numOfTodos = todos.length;
+  const arrowIcon = isListVisible ? (
+    <FaAngleUp
+      size={30}
+      className={styles.arrowIcon}
+      onClick={handleToggleList}
+    />
+  ) : (
+    <FaAngleDown
+      size={30}
+      className={styles.arrowIcon}
+      onClick={handleToggleList}
+    />
+  );
 
-  useEffect(() => {
-    if (firstRun) {
-      firstRun = false;
-      return;
-    }
-    dispatch(sendTodosData(todos));
-  }, [todos]);
+  if (numOfTodos === 0) {
+    return (
+      <div className={styles.todosContainer}>
+        <h3>
+          {header} ({numOfTodos}) {arrowIcon}
+        </h3>
+        {isListVisible && (
+          <Card backgroundColor="#fff">
+            <div className={styles.empty}>Nothing to show here</div>
+          </Card>
+        )}
+      </div>
+    );
+  }
 
   return (
-    <ul className={styles.list}>
-      {todos.map(todo => {
-        const { id, name, category, isDone } = todo;
-        return (
-          <ToDoItem
-            key={id}
-            id={id}
-            name={name}
-            category={category}
-            isDone={isDone}
-          />
-        );
-      })}
-    </ul>
+    <div className={styles.todosContainer}>
+      <h3>
+        {header} ({numOfTodos}) {arrowIcon}
+      </h3>
+
+      {isListVisible && (
+        <ul className={styles.list}>
+          {todos.map(todo => {
+            const { id, name, category, isDone } = todo;
+            return (
+              <ToDoItem
+                key={id}
+                id={id}
+                name={name}
+                category={category}
+                isDone={isDone}
+              />
+            );
+          })}
+        </ul>
+      )}
+    </div>
   );
 };
 
-export default ToDoList;
+export default TodoList;

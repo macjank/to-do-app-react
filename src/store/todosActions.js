@@ -17,7 +17,6 @@ export const getTodosData = () => {
 
     try {
       const todosData = await sendRequest();
-      console.log(todosData);
       dispatch(todosActions.replaceTodos(todosData));
     } catch (error) {
       console.log(error);

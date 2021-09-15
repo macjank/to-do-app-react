@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { todosActions } from "./store";
 import "./App.css";
 import ToDoForm from "./components/ToDoForm";
-import ToDoList from "./components/ToDoList";
+import TodoSection from "./components/TodoSection";
 import Card from "./components/UI/Card";
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
           onSubmit={handleSubmitNewTodo}
           submitBtnContent="Add"
         />
-        <ToDoList />
+        <TodoSection />
       </Card>
     </div>
   );

@@ -1,5 +1,24 @@
+.todosContainer {
+  padding: 1em;
+}
+
+.todosContainer h3 {
+  color: #fff;
+  font-weight: 100;
+  text-align: left;
+  padding-left: 3em;
+}
+
 .list {
   list-style-type: none;
-  padding: 1em;
+  padding: 0;
   margin: 0;
+}
+
+.empty {
+  padding: 1em;
+}
+
+.arrowIcon {
+  cursor: pointer;
 }
