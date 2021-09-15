@@ -1,0 +1,44 @@
+.form {
+  padding: 1em;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  color: #fff;
+}
+
+.form input,
+.form label,
+.form select {
+  padding: 0.5em;
+  margin: 1em;
+}
+
+.form__todo, .form__category {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__todo {
+  justify-self: self-end;
+}
+
+.form__category {
+  justify-self: self-start;
+}
+
+.btnContainer {
+  grid-column: span 3;
+  justify-self: center;
+}
+
+.form button {
+  width: 6em;
+  height: 3em;
+  margin: 1em;
+  border-radius: 1em;
+  border: none;
+  background-color: var(--btn-bcg-color);
+  color: #fff;
+  font-size: 1.1em;
+  cursor: pointer;
+}

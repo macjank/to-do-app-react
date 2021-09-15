@@ -1,0 +1,30 @@
+.item {
+  margin-bottom: 1em;
+  border: inherit;
+  border-radius: inherit;
+  padding: 1em;
+  background-color: #fff;
+  display: grid;
+  grid-template-columns: 60% auto auto;
+  align-items: center;
+}
+
+.item__name {
+  max-width: 100%;
+  justify-self: self-start;
+  overflow-wrap: break-word;
+  text-align: start;
+}
+
+.item__category {
+  color: rgba(0, 0, 0, 0.467);
+  justify-self: center;
+}
+
+.item__actions {
+  justify-self: self-end;
+}
+
+.done {
+  text-decoration: line-through;
+}
