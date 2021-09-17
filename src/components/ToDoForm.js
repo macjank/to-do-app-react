@@ -79,12 +79,11 @@ import styles from "./css/ToDoForm.module.css";
 import { editIcon } from "../helpers/icons";
 import Button from "./UI/Button";
 
-const checkValidity = (todo, category) => {
-  if (todo.trim() === "" || category === "") {
+const checkValidity = value => {
+  if (value.trim() === "") {
     return false;
-  } else {
-    return true;
   }
+  return true;
 };
 
 const ToDoForm = ({
@@ -98,20 +97,38 @@ const ToDoForm = ({
   const [todo, setTodo] = useState(initialTodo);
   const [category, setCategory] = useState(initialCategory);
 
+  const [isTodoNOK, setIsTodoNOK] = useState(false);
+  const [isCategoryNOK, setIsCategoryNOK] = useState(false);
+
   const categories = useSelector(state => state.categories.categories);
+
+  const handleTodoChange = e => {
+    setTodo(e.target.value);
+    setIsTodoNOK(false);
+  };
+
+  const handleCategoryChange = e => {
+    setCategory(e.target.value);
+    setIsCategoryNOK(false);
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
-    const isFormValid = checkValidity(todo, category);
+    const isTodoValid = checkValidity(todo);
+    const isCategoryValid = checkValidity(category);
 
-    if (!isFormValid) {
-      console.log("NOK");
-      return;
-    }
+    isTodoValid ? setIsTodoNOK(false) : setIsTodoNOK(true);
+
+    isCategoryValid ? setIsCategoryNOK(false) : setIsCategoryNOK(true);
+
+    if (!isTodoValid || !isCategoryValid) return;
 
     onSubmit(todo, category);
+
     setTodo("");
     setCategory("");
+    setIsTodoNOK(false);
+    setIsCategoryNOK(false);
 
     onCloseForm && onCloseForm();
   };
@@ -122,28 +139,33 @@ const ToDoForm = ({
         <div className={styles.form__todo}>
           <label htmlFor="todo">To do: </label>
           <input
+            className={isTodoNOK ? styles.error : ""}
             type="text"
             id="todo"
             name="todo"
             placeholder="Add todo..."
             value={todo}
-            onChange={e => setTodo(e.target.value)}
+            onChange={handleTodoChange}
           />
         </div>
         <div className={styles.form__category}>
           <label htmlFor="category">Category</label>
           <select
+            className={isCategoryNOK ? styles.error : ""}
             name="category"
             id="category"
             value={category}
-            onChange={e => setCategory(e.target.value)}
+            onChange={handleCategoryChange}
           >
             <option value="">--Select a category--</option>
             {categories.map((cat, index) => (
-              <option key={index} value={cat}>{cat}</option>
+              <option key={index} value={cat}>
+                {cat}
+              </option>
             ))}
           </select>
         </div>
+        {}
       </div>
       <div className={styles.form__actions}>
         {isCancelBtn && (
