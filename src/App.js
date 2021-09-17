@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { todosActions } from "./store";
+import { todosActions } from "./store/todos-slice";
 import "./App.css";
 import ToDoForm from "./components/ToDoForm";
 import TodoSection from "./components/TodoSection";

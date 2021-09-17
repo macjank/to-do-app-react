@@ -2,7 +2,7 @@ import styles from "./css/ToDoItem.module.css";
 import Button from "./UI/Button";
 import Card from "./UI/Card";
 import { useDispatch } from "react-redux";
-import { todosActions } from "../store";
+import { todosActions } from "../store/todos-slice";
 import { checkIcon, deleteIcon, editIcon } from "../helpers/icons";
 import { useState } from "react";
 import EditToDo from "./EditToDo";
@@ -38,13 +38,19 @@ const ToDoItem = ({ id, name, category, isDone }) => {
               content={checkIcon}
               backgroundColor="rgb(41, 145, 55)"
               onClick={handleDoneTodo}
+              isSquare={true}
             />
             <Button
               content={deleteIcon}
               backgroundColor="rgb(255, 52, 52)"
               onClick={handleDeleteTodo}
+              isSquare={true}
             />
-            <Button content={editIcon} onClick={handleOpenEditTodo} />
+            <Button
+              content={editIcon}
+              onClick={handleOpenEditTodo}
+              isSquare={true}
+            />
           </div>
         </li>
       </Card>

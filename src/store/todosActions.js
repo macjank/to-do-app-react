@@ -1,4 +1,4 @@
-import { todosActions } from "./index";
+import { todosActions } from "./todos-slice";
 
 export const getTodosData = () => {
   return async dispatch => {

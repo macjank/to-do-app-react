@@ -1,4 +1,55 @@
 .form {
+  padding: 2em;
+  color: #fff;
+}
+
+.form label {
+  margin-bottom: 1em;
+}
+
+.form__control {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form__todo,
+.form__category {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__todo {
+  width: 70%;
+}
+
+.form__todo input,
+.form__category select {
+  padding: 1em;
+}
+
+.form__todo input {
+  width: 80%;
+}
+
+.form__actions {
+  padding: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addBtn,
+.cancelBtn {
+  width: 8em;
+  height: 4em;
+}
+
+.editBtn {
+  height: 4em;
+  width: 4em;
+}
+
+/* .form {
   padding: 1em;
   max-width: 100%;
   display: grid;
@@ -13,17 +64,35 @@
   margin: 1em;
 }
 
-.form__todo, .form__category {
+.form__todo {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__category {
+  display: flex;
+  align-items: flex-end;
+}
+
+.form__category__select {
   display: flex;
   flex-direction: column;
 }
 
 .form__todo {
-  justify-self: self-end;
+  justify-self: center;
+  align-self: center;
 }
 
 .form__category {
-  justify-self: self-start;
+  justify-self: center;
+}
+
+.form__category__new {
+  justify-self: self-end;
+  align-self: flex-end;
+  padding: 0.5em;
+  margin: 1em;
 }
 
 .btnContainer {
@@ -31,7 +100,7 @@
   justify-self: center;
 }
 
-.form button {
+.btnContainer button {
   width: 6em;
   height: 3em;
   margin: 1em;
@@ -41,4 +110,4 @@
   color: #fff;
   font-size: 1.1em;
   cursor: pointer;
-}
+} */

@@ -10,7 +10,7 @@ const TodoSection = () => {
   const [selectedCatUndone, setSelectedCatUndone] = useState("all");
   const [selectedCatDone, setSelectedCatDone] = useState("all");
 
-  const todos = useSelector(state => state.todos);
+  const todos = useSelector(state => state.todos.todos);
   const dispatch = useDispatch();
 
   useEffect(() => {

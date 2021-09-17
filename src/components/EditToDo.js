@@ -1,6 +1,6 @@
 import Modal from "./UI/Modal";
 import { useDispatch } from "react-redux";
-import { todosActions } from "../store";
+import { todosActions } from "../store/todos-slice";
 import ToDoForm from "./ToDoForm";
 import Card from "./UI/Card";
 

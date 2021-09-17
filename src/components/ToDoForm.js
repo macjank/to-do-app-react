@@ -74,7 +74,10 @@
 // export default ToDoForm;
 
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import styles from "./css/ToDoForm.module.css";
+import { editIcon } from "../helpers/icons";
+import Button from "./UI/Button";
 
 const checkValidity = (todo, category) => {
   if (todo.trim() === "" || category === "") {
@@ -95,6 +98,8 @@ const ToDoForm = ({
   const [todo, setTodo] = useState(initialTodo);
   const [category, setCategory] = useState(initialCategory);
 
+  const categories = useSelector(state => state.categories.categories);
+
   const handleSubmit = e => {
     e.preventDefault();
     const isFormValid = checkValidity(todo, category);
@@ -113,38 +118,49 @@ const ToDoForm = ({
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <div className={styles.form__todo}>
-        <label htmlFor="todo">To do: </label>
-        <input
-          type="text"
-          id="todo"
-          name="todo"
-          placeholder="Add todo..."
-          value={todo}
-          onChange={e => setTodo(e.target.value)}
-        />
+      <div className={styles.form__control}>
+        <div className={styles.form__todo}>
+          <label htmlFor="todo">To do: </label>
+          <input
+            type="text"
+            id="todo"
+            name="todo"
+            placeholder="Add todo..."
+            value={todo}
+            onChange={e => setTodo(e.target.value)}
+          />
+        </div>
+        <div className={styles.form__category}>
+          <label htmlFor="category">Category</label>
+          <select
+            name="category"
+            id="category"
+            value={category}
+            onChange={e => setCategory(e.target.value)}
+          >
+            <option value="">--Select a category--</option>
+            {categories.map((cat, index) => (
+              <option key={index} value={cat}>{cat}</option>
+            ))}
+          </select>
+        </div>
       </div>
-      <div className={styles.form__category}>
-        <label htmlFor="category">Category</label>
-        <select
-          name="category"
-          id="category"
-          value={category}
-          onChange={e => setCategory(e.target.value)}
-        >
-          <option value="">--Select a category--</option>
-          <option value="work">work</option>
-          <option value="home">home</option>
-          <option value="to buy">to buy</option>
-        </select>
-      </div>
-      <div className={styles.btnContainer}>
+      <div className={styles.form__actions}>
         {isCancelBtn && (
-          <button type="button" onClick={onCloseForm}>
-            Cancel
-          </button>
+          <Button
+            type="button"
+            classesAdded={styles.cancelBtn}
+            onClick={onCloseForm}
+            content="Cancel"
+          />
         )}
-        <button>{submitBtnContent}</button>
+        <Button classesAdded={styles.addBtn} content={submitBtnContent} />
+        <Button
+          type="button"
+          classesAdded={styles.editBtn}
+          content={editIcon}
+          isSquare={true}
+        />
       </div>
     </form>
   );
