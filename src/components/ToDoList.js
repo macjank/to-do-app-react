@@ -1,10 +1,12 @@
 import ToDoItem from "./ToDoItem";
 import styles from "./css/TodoList.module.css";
 import Card from "./UI/Card";
+import { useSelector } from "react-redux";
 import { useState } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
 const TodoList = ({ done, header, todos, category, onChangeCat }) => {
+  const categories = useSelector(state => state.categories.categories);
   const [isListVisible, setIsListVisible] = useState(done ? false : true);
 
   const handleToggleList = () => {
@@ -67,9 +69,11 @@ const TodoList = ({ done, header, todos, category, onChangeCat }) => {
             onChange={handleChangeCategory}
           >
             <option value="all">all</option>
-            <option value="work">work</option>
-            <option value="home">home</option>
-            <option value="to buy">to buy</option>
+            {categories.map((cat, index) => (
+              <option key={index} value={cat}>
+                {cat}
+              </option>
+            ))}
           </select>
         )}
       </div>

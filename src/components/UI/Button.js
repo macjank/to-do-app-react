@@ -1,9 +1,21 @@
 import styles from "../css/Button.module.css";
 
-const Button = ({ content, backgroundColor, onClick }) => {
+const Button = ({
+  type,
+  classesAdded,
+  content,
+  backgroundColor,
+  onClick,
+  isSquare,
+}) => {
+  const classes = `${styles.btn} ${classesAdded} ${
+    isSquare ? styles.square : ""
+  }`;
+  
   return (
     <button
-      className={styles.btn}
+      type={type}
+      className={classes}
       style={{ backgroundColor }}
       onClick={onClick}
     >
