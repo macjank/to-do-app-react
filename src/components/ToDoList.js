@@ -1,21 +1,19 @@
-import ToDoItem from "./ToDoItem";
-import styles from "./css/TodoList.module.css";
-import Card from "./UI/Card";
-import { useSelector } from "react-redux";
-import { useState } from "react";
-import { FaAngleDown, FaAngleUp } from "react-icons/fa";
+import ToDoItem from './ToDoItem';
+import styles from './css/TodoList.module.css';
+import Card from './UI/Card';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
 
 const TodoList = ({ done, header, todos, category, onChangeCat }) => {
   const categories = useSelector(state => state.categories.categories);
   const [isListVisible, setIsListVisible] = useState(done ? false : true);
 
-  const handleToggleList = () => {
-    setIsListVisible(prevState => !prevState);
-  };
+  const isLoading = useSelector(state => state.todos.isLoading);
 
-  const handleChangeCategory = e => {
-    onChangeCat(e.target.value);
-  };
+  const handleToggleList = () => setIsListVisible(prevState => !prevState);
+
+  const handleChangeCategory = e => onChangeCat(e.target.value);
 
   const numOfTodos = todos.length;
   const arrowIcon = isListVisible ? (
@@ -26,9 +24,22 @@ const TodoList = ({ done, header, todos, category, onChangeCat }) => {
 
   let content;
 
-  if (numOfTodos === 0) {
+  if (isLoading) {
     content = (
-      <Card backgroundColor="#fff">
+      <Card backgroundColor='#fff'>
+        <div className={styles.empty}>
+          <div className={styles.loadingSpinner}>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </Card>
+    );
+  } else if (numOfTodos === 0) {
+    content = (
+      <Card backgroundColor='#fff'>
         <div className={styles.empty}>Nothing to show here</div>
       </Card>
     );
@@ -63,12 +74,12 @@ const TodoList = ({ done, header, todos, category, onChangeCat }) => {
         {isListVisible && (
           <select
             className={styles.filter}
-            name="categories"
-            id="categories"
+            name='categories'
+            id='categories'
             value={category}
             onChange={handleChangeCategory}
           >
-            <option value="all">all</option>
+            <option value='all'>all</option>
             {categories.map((cat, index) => (
               <option key={index} value={cat}>
                 {cat}

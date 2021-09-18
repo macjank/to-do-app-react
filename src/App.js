@@ -1,9 +1,9 @@
-import { useDispatch } from "react-redux";
-import { todosActions } from "./store/todos-slice";
-import "./App.css";
-import ToDoForm from "./components/ToDoForm";
-import TodoSection from "./components/TodoSection";
-import Card from "./components/UI/Card";
+import { useDispatch } from 'react-redux';
+import { todosActions } from './store/todos-slice';
+import './App.css';
+import ToDoForm from './components/ToDoForm';
+import TodoSection from './components/TodoSection';
+import Card from './components/UI/Card';
 
 function App() {
   const dispatch = useDispatch();
@@ -19,13 +19,13 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Card backgroundColor={"var(--primary-color)"}>
+    <div className='App'>
+      <Card backgroundColor={'var(--primary-color)'}>
         <ToDoForm
-          initialTodo=""
-          initialCategory=""
+          initialTodo=''
+          initialCategory=''
           onSubmit={handleSubmitNewTodo}
-          submitBtnContent="Add"
+          submitBtnContent='Add'
         />
         <TodoSection />
       </Card>
