@@ -3,24 +3,29 @@ import styles from './css/TodoList.module.css';
 import Card from './UI/Card';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
-import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
+import TodoListHeader from './TodoListHeader';
 
-const TodoList = ({ done, header, todos, category, onChangeCat }) => {
-  const categories = useSelector(state => state.categories.categories);
+const TodoList = ({ done, header, todos }) => {
+  //state
+  const isLoading = useSelector(state => state.todos.isLoading);
+  const [selectedCat, setSelectedCat] = useState('all');
+
+  //as a wanted default behavior: done-list is visible, undone-list is NOT visible
   const [isListVisible, setIsListVisible] = useState(done ? false : true);
 
-  const isLoading = useSelector(state => state.todos.isLoading);
+  //handlers
+  const handleToggleVisibility = () =>
+    setIsListVisible(prevState => !prevState);
+  const handleChangeCategory = e => setSelectedCat(e.target.value);
 
-  const handleToggleList = () => setIsListVisible(prevState => !prevState);
+  const todosToShow = todos.filter(todo => {
+    if (selectedCat === 'all') {
+      return true;
+    }
+    return todo.category === selectedCat;
+  });
 
-  const handleChangeCategory = e => onChangeCat(e.target.value);
-
-  const numOfTodos = todos.length;
-  const arrowIcon = isListVisible ? (
-    <FaAngleUp size={30} />
-  ) : (
-    <FaAngleDown size={30} />
-  );
+  const numOfTodos = todosToShow.length;
 
   let content;
 
@@ -46,7 +51,7 @@ const TodoList = ({ done, header, todos, category, onChangeCat }) => {
   } else {
     content = (
       <ul className={styles.list}>
-        {todos.map(todo => {
+        {todosToShow.map(todo => {
           const { id, name, category, isDone } = todo;
           return (
             <ToDoItem
@@ -64,31 +69,14 @@ const TodoList = ({ done, header, todos, category, onChangeCat }) => {
 
   return (
     <div className={styles.todosContainer}>
-      <div className={styles.header}>
-        <div className={styles.title} onClick={handleToggleList}>
-          <p>
-            {header} ( {numOfTodos} )
-          </p>
-          {arrowIcon}
-        </div>
-        {isListVisible && (
-          <select
-            className={styles.filter}
-            name='categories'
-            id='categories'
-            value={category}
-            onChange={handleChangeCategory}
-          >
-            <option value='all'>all</option>
-            {categories.map((cat, index) => (
-              <option key={index} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
-        )}
-      </div>
-
+      <TodoListHeader
+        title={header}
+        numOfTodos={numOfTodos}
+        onToggleVisibility={handleToggleVisibility}
+        onChangeCategory={handleChangeCategory}
+        selectedCat={selectedCat}
+        isListVisible={isListVisible}
+      />
       {isListVisible && content}
     </div>
   );
