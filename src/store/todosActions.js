@@ -3,6 +3,7 @@ import { todosActions } from "./todos-slice";
 export const getTodosData = () => {
   return async dispatch => {
     const sendRequest = async () => {
+      dispatch(todosActions.activateLoading());
       const response = await fetch(
         "https://to-do-app-react-52fdc-default-rtdb.firebaseio.com/todos.json"
       );
@@ -18,6 +19,7 @@ export const getTodosData = () => {
     try {
       const todosData = await sendRequest();
       dispatch(todosActions.replaceTodos(todosData));
+      dispatch(todosActions.deactivateLoading())
     } catch (error) {
       console.log(error);
     }
