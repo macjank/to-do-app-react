@@ -1,16 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const todosSlice = createSlice({
-  name: "todos",
+  name: 'todos',
   initialState: {
     todos: [],
+    isLoading: false,
   },
   reducers: {
     replaceTodos(state, action) {
       state.todos = action.payload ? action.payload : [];
     },
     addTodo(state, action) {
-      state.todos.push(action.payload);
+      state.todos.unshift(action.payload);
     },
     deleteTodo(state, action) {
       state.todos = state.todos.filter(todo => todo.id !== action.payload);
@@ -26,6 +27,12 @@ const todosSlice = createSlice({
 
       editedTodo.name = action.payload.name;
       editedTodo.category = action.payload.category;
+    },
+    activateLoading(state) {
+      state.isLoading = true;
+    },
+    deactivateLoading(state) {
+      state.isLoading = false;
     },
   },
 });
