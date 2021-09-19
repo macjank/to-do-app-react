@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { getTodosData, sendTodosData } from "../store/todosActions";
-import TodoList from "./TodoList";
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getTodosData, sendTodosData } from '../store/todosActions';
+import TodoList from './TodoList';
 
+//helper variable to avoid sending empty array of data to firebase on the first render
 let firstRun = true;
 
 const TodoSection = () => {
-  const [selectedCatUndone, setSelectedCatUndone] = useState("all");
-  const [selectedCatDone, setSelectedCatDone] = useState("all");
-
+  //todos and dispatches are managed in one place and only parts of todos are splitted into TodoList components
   const todos = useSelector(state => state.todos.todos);
   const dispatch = useDispatch();
 
@@ -18,6 +17,7 @@ const TodoSection = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    //avoid sending empty array of data to firebase on the first render
     if (firstRun) {
       firstRun = false;
       return;
@@ -25,46 +25,18 @@ const TodoSection = () => {
     dispatch(sendTodosData(todos));
   }, [todos, dispatch]);
 
-  const handleChangeCatUndone = cat => {
-    setSelectedCatUndone(cat);
-  };
-  const handleChangeCatDone = cat => {
-    setSelectedCatDone(cat);
-  };
-
-  const undoneTodosToShow = todos
-    .filter(todo => !todo.isDone)
-    .filter(todo => {
-      if (selectedCatUndone === "all") {
-        return true;
-      }
-      return todo.category === selectedCatUndone;
-    });
-
-  const doneTodosToShow = todos
-    .filter(todo => todo.isDone)
-    .filter(todo => {
-      if (selectedCatUndone === "all") {
-        return true;
-      }
-      return todo.category === selectedCatUndone;
-    });
-
+  //rendering two sibling TodoLists - one for done todos, one for un-done
   return (
     <>
       <TodoList
         done={false}
-        header="Things to do"
-        todos={undoneTodosToShow}
-        category={selectedCatUndone}
-        onChangeCat={handleChangeCatUndone}
+        header='Things to do'
+        todos={todos.filter(todo => !todo.isDone)}
       />
       <TodoList
         done={true}
-        header="Done things"
-        todos={doneTodosToShow}
-        category={selectedCatDone}
-        onChangeCat={handleChangeCatDone}
+        header='Done things'
+        todos={todos.filter(todo => todo.isDone)}
       />
     </>
   );
