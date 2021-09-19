@@ -7,7 +7,9 @@ import TodoListHeader from './TodoListHeader';
 
 const TodoList = ({ done, header, todos }) => {
   //state
+  //
   const isLoading = useSelector(state => state.todos.isLoading);
+  //displaying all categories by default
   const [selectedCat, setSelectedCat] = useState('all');
 
   //as a wanted default behavior: done-list is visible, undone-list is NOT visible
@@ -30,10 +32,11 @@ const TodoList = ({ done, header, todos }) => {
   let content;
 
   if (isLoading) {
+    //loading animation
     content = (
       <Card backgroundColor='#fff'>
         <div className={styles.empty}>
-          <div className={styles.loadingSpinner}>
+          <div className={styles.loading}>
             <div></div>
             <div></div>
             <div></div>
@@ -45,7 +48,7 @@ const TodoList = ({ done, header, todos }) => {
   } else if (numOfTodos === 0) {
     content = (
       <Card backgroundColor='#fff'>
-        <div className={styles.empty}>Nothing to show here</div>
+        <div className={styles.empty}>The list is empty</div>
       </Card>
     );
   } else {

@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { getTodosData, sendTodosData } from '../store/todosActions';
 import TodoList from './TodoList';
 
+//helper variable to avoid sending empty array of data to firebase on the first render
 let firstRun = true;
 
 const TodoSection = () => {
+  //todos and dispatches are managed in one place and only parts of todos are splitted into TodoList components
   const todos = useSelector(state => state.todos.todos);
   const dispatch = useDispatch();
 
@@ -15,6 +17,7 @@ const TodoSection = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    //avoid sending empty array of data to firebase on the first render
     if (firstRun) {
       firstRun = false;
       return;
@@ -22,6 +25,7 @@ const TodoSection = () => {
     dispatch(sendTodosData(todos));
   }, [todos, dispatch]);
 
+  //rendering two sibling TodoLists - one for done todos, one for un-done
   return (
     <>
       <TodoList
