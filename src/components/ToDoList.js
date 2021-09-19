@@ -9,6 +9,8 @@ const TodoList = ({ done, header, todos }) => {
   //state
   //
   const isLoading = useSelector(state => state.todos.isLoading);
+  const isError = useSelector(state => state.error.isError);
+  const errorInfo = useSelector(state => state.error.errorInfo);
   //displaying all categories by default
   const [selectedCat, setSelectedCat] = useState('all');
 
@@ -43,6 +45,12 @@ const TodoList = ({ done, header, todos }) => {
             <div></div>
           </div>
         </div>
+      </Card>
+    );
+  } else if (isError) {
+    content = (
+      <Card backgroundColor='#fff'>
+        <div className={styles.empty}>{errorInfo}</div>
       </Card>
     );
   } else if (numOfTodos === 0) {
