@@ -1,15 +1,17 @@
-import { todosActions } from "./todos-slice";
+import { todosActions } from './todos-slice';
+import { errorActions } from './error-slice';
 
 export const getTodosData = () => {
   return async dispatch => {
     const sendRequest = async () => {
+      dispatch(errorActions.deactivateError());
       dispatch(todosActions.activateLoading());
       const response = await fetch(
-        "https://to-do-app-react-52fdc-default-rtdb.firebaseio.com/todos.json"
+        'https://to-do-app-react-52fdc-default-rtdb.firebaseio.com/todos.json'
       );
 
       if (!response.ok) {
-        throw new Error("problema");
+        throw new Error('problema');
       }
 
       const responseData = await response.json();
@@ -19,26 +21,30 @@ export const getTodosData = () => {
     try {
       const todosData = await sendRequest();
       dispatch(todosActions.replaceTodos(todosData));
-      dispatch(todosActions.deactivateLoading())
+      dispatch(todosActions.deactivateLoading());
     } catch (error) {
-      console.log(error);
+      dispatch(todosActions.deactivateLoading());
+      dispatch(
+        errorActions.activateError('Getting data from the server has failed')
+      );
     }
   };
 };
 
 export const sendTodosData = todos => {
-  return async () => {
+  return async dispatch => {
     const sendRequest = async () => {
+      dispatch(errorActions.deactivateError());
       const response = await fetch(
-        "https://to-do-app-react-52fdc-default-rtdb.firebaseio.com/todos.json",
+        'https://to-do-app-react-52fdc-default-rtdb.firebaseio.com/todos.json',
         {
-          method: "PUT",
+          method: 'PUT',
           body: JSON.stringify(todos),
         }
       );
 
       if (!response.ok) {
-        throw new Error("problema");
+        throw new Error('problema');
       }
     };
 
@@ -46,6 +52,9 @@ export const sendTodosData = todos => {
       await sendRequest();
     } catch (error) {
       console.log(error);
+      dispatch(
+        errorActions.activateError('Sending data to the server has failed')
+      );
     }
   };
 };

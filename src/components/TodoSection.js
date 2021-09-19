@@ -21,8 +21,9 @@ const TodoSection = () => {
     if (firstRun) {
       firstRun = false;
       return;
+    } else {
+      dispatch(sendTodosData(todos));
     }
-    dispatch(sendTodosData(todos));
   }, [todos, dispatch]);
 
   //rendering two sibling TodoLists - one for done todos, one for un-done
