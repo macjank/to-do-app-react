@@ -1,9 +1,8 @@
 .item {
-  margin-bottom: 1em;
   border: inherit;
   border-radius: inherit;
-  padding: 1em;
-  background-color: #fff;
+  background-color: inherit;
+  padding: 0 1em;
   display: grid;
   grid-template-columns: 60% auto auto;
   align-items: center;
