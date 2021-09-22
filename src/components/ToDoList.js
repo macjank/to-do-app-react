@@ -9,7 +9,6 @@ import TodoListHeader from './TodoListHeader';
 
 const TodoList = ({ done, header, todos }) => {
   //state
-  //
   const isLoading = useSelector(state => state.todos.isLoading);
   const isError = useSelector(state => state.error.isError);
   const errorInfo = useSelector(state => state.error.errorInfo);

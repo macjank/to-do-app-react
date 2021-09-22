@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { categoriesActions } from '../store/categories-slice';
 import { getTodosData, sendTodosData } from '../store/todosActions';
 import TodoList from './TodoList';
 
@@ -25,6 +26,16 @@ const TodoSection = () => {
       dispatch(sendTodosData(todos));
     }
   }, [todos, dispatch]);
+
+  useEffect(() => {
+    const categories = todos.map(todo => todo.category);
+
+    const uniqueCategories = categories.filter((cat, index, self) => {
+      return self.indexOf(cat) === index;
+    });
+
+    dispatch(categoriesActions.replaceCategories(uniqueCategories));
+  }, [todos]);
 
   //rendering two sibling TodoLists - one for done todos, one for un-done
   return (

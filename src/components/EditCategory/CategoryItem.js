@@ -2,8 +2,16 @@ import Card from '../UI/Card';
 import styles from '../css/CategoryItem.module.css';
 import { deleteIcon } from '../../helpers/icons';
 import Button from '../UI/Button';
+import { useDispatch } from 'react-redux';
+import { categoriesActions } from '../../store/categories-slice';
 
 const CategoryItem = ({ cat }) => {
+  const dispatch = useDispatch();
+
+  const handleDeleteCategory = () => {
+    dispatch(categoriesActions.removeCategory(cat));
+  };
+
   return (
     <Card backgroundColor='#fff'>
       <li className={styles.item}>
@@ -13,7 +21,7 @@ const CategoryItem = ({ cat }) => {
         <Button
           content={deleteIcon}
           backgroundColor='rgb(255, 52, 52)'
-          // onClick={handleDeleteTodo}
+          onClick={handleDeleteCategory}
           isSquare={true}
         />
       </li>

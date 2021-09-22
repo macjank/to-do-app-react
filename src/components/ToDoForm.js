@@ -139,6 +139,11 @@ const ToDoForm = ({
     onCloseForm && onCloseForm();
   };
 
+  const catDefaultContent =
+    categories.length > 0
+      ? '--Select category--'
+      : '--Click edit icon to add category--';
+
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.form__control}>
@@ -163,7 +168,7 @@ const ToDoForm = ({
             value={category}
             onChange={handleCategoryChange}
           >
-            <option value=''>--Select a category--</option>
+            <option value=''>{catDefaultContent}</option>
             {categories.map((cat, index) => (
               <option key={index} value={cat}>
                 {cat}
