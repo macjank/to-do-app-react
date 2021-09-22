@@ -35,7 +35,7 @@ const TodoSection = () => {
     });
 
     dispatch(categoriesActions.replaceCategories(uniqueCategories));
-  }, [todos]);
+  }, [todos, dispatch]);
 
   //rendering two sibling TodoLists - one for done todos, one for un-done
   return (

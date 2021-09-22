@@ -1,4 +1,4 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import todosSlice from './todos-slice';
 import categoriesSlice from './categories-slice';
 import errorSlice from './error-slice';
