@@ -1,0 +1,12 @@
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 150px;
+    padding: 0 .5em;
+}
+
+.item__name__content {
+    margin: 0;
+    padding: 0;
+}

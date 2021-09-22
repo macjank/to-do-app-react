@@ -1,9 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const categoriesSlice = createSlice({
-  name: "categories",
+  name: 'categories',
   initialState: {
-    categories: ["work", "home", "to buy", "dupa"],
+    categories: ['work', 'home', 'to buy', 'dupa'],
   },
   reducers: {
     addCategory(state, action) {
@@ -11,5 +11,7 @@ const categoriesSlice = createSlice({
     },
   },
 });
+
+export const categoriesActions = categoriesSlice.actions;
 
 export default categoriesSlice;
