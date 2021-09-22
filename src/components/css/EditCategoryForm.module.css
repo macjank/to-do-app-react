@@ -1,0 +1,19 @@
+
+
+.form > * {
+  display: block;
+  margin: 1em auto;
+}
+
+.form label {
+  color: #fff;
+}
+
+.form input {
+  padding: 1em;
+}
+
+.error {
+  background-color: rgb(255, 194, 194);
+  border: 2px solid red;
+}
