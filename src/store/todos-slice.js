@@ -4,7 +4,6 @@ const todosSlice = createSlice({
   name: 'todos',
   initialState: {
     todos: [],
-    isLoading: false,
   },
   reducers: {
     replaceTodos(state, action) {
@@ -27,12 +26,6 @@ const todosSlice = createSlice({
 
       editedTodo.name = action.payload.name;
       editedTodo.category = action.payload.category;
-    },
-    activateLoading(state) {
-      state.isLoading = true;
-    },
-    deactivateLoading(state) {
-      state.isLoading = false;
     },
   },
 });
