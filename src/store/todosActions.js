@@ -12,7 +12,7 @@ export const getTodosData = () => {
       );
 
       if (!response.ok) {
-        throw new Error('problema');
+        throw new Error('Getting data from the server has failed');
       }
 
       const responseData = await response.json();
@@ -45,7 +45,7 @@ export const sendTodosData = todos => {
       );
 
       if (!response.ok) {
-        throw new Error('problema');
+        throw new Error('Sending data to the server has failed');
       }
     };
 
