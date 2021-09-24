@@ -4,7 +4,6 @@ import { todosActions } from './store/todos-slice';
 import './App.css';
 import ToDoForm from './components/ToDoForm';
 import TodoSection from './components/TodoSection';
-import Card from './components/UI/Card';
 import { categoriesActions } from './store/categories-slice';
 import { getTodosData, sendTodosData } from './store/todosActions';
 
@@ -57,7 +56,7 @@ function App() {
 
   return (
     <div className='App'>
-      <Card backgroundColor={'var(--primary-color)'}>
+     
         <ToDoForm
           initialTodo=''
           initialCategory=''
@@ -65,7 +64,7 @@ function App() {
           submitBtnContent='Add'
         />
         <TodoSection />
-      </Card>
+     
     </div>
   );
 }
