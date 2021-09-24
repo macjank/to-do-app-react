@@ -5,15 +5,21 @@ import Button from '../UI/Button';
 import { useDispatch } from 'react-redux';
 import { categoriesActions } from '../../store/categories-slice';
 
-const CategoryItem = ({ cat }) => {
+const CategoryItem = ({ cat, onChangeCategory, onClose }) => {
   const dispatch = useDispatch();
 
-  const handleDeleteCategory = () => {
+  const handleChangeCategory = () => {
+    onChangeCategory(cat);
+    onClose();
+  };
+
+  const handleDeleteCategory = e => {
+    e.stopPropagation();
     dispatch(categoriesActions.removeCategory(cat));
   };
 
   return (
-    <Card backgroundColor='#fff'>
+    <Card backgroundColor='#fff' onClick={handleChangeCategory}>
       <li className={styles.item}>
         <div className={styles.item__name}>
           <h4 className={styles.item__name__content}>{cat}</h4>

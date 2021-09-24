@@ -33,8 +33,8 @@ const ToDoForm = ({
     setIsTodoOK(true);
   };
 
-  const handleChangeCategory = e => {
-    setCategory(e.target.value);
+  const handleChangeCategory = category => {
+    setCategory(category);
     setIsCategoryOK(true);
   };
 
@@ -95,7 +95,7 @@ const ToDoForm = ({
             name='category'
             id='category'
             value={category}
-            onChange={handleChangeCategory}
+            onChange={e => handleChangeCategory(e.target.value)}
           >
             <option value=''>{catDefaultContent}</option>
             {categories.map((cat, index) => (
@@ -105,7 +105,6 @@ const ToDoForm = ({
             ))}
           </select>
         </div>
-
       </div>
       <div className={styles.form__actions}>
         {isCancelBtn && (
@@ -127,7 +126,12 @@ const ToDoForm = ({
       </div>
 
       {/* displaying modal for editing categories */}
-      {isEditingCategory && <EditCategory onClose={handleCloseEditCategory} />}
+      {isEditingCategory && (
+        <EditCategory
+          onClose={handleCloseEditCategory}
+          onChangeCategory={handleChangeCategory}
+        />
+      )}
     </form>
   );
 };
