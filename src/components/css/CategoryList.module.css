@@ -3,7 +3,7 @@
   padding-left: 0;
   padding: 2em;
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: max-content 50%;
 
 }
 

@@ -1,77 +1,5 @@
-// import { useState } from "react";
-// import { useDispatch } from "react-redux";
-// import { todosActions } from "../store";
-// import styles from "./css/ToDoForm.module.css";
-
-// const checkValidity = (todo, category) => {
-//   if (todo.trim() === "" || category === "") {
-//     return false;
-//   } else {
-//     return true;
-//   }
-// };
-
-// const ToDoForm = () => {
-//   const [todo, setTodo] = useState("");
-//   const [category, setCategory] = useState("");
-
-//   const dispatch = useDispatch();
-
-//   const handleSubmit = e => {
-//     e.preventDefault();
-
-//     const isFormValid = checkValidity(todo, category);
-
-//     if (!isFormValid) {
-//       console.log("NOK");
-//       return;
-//     }
-
-//     const newTodo = {
-//       id: Date.now(),
-//       name: todo,
-//       category,
-//       isDone: false,
-//     };
-
-//     dispatch(todosActions.addTodo(newTodo));
-//     setTodo("");
-//     setCategory("");
-//   };
-
-//   return (
-//     <form className={styles.form} onSubmit={handleSubmit}>
-//       <div className={styles.form__todo}>
-//         <label htmlFor="todo">New to-do</label>
-//         <input
-//           type="text"
-//           id="todo"
-//           name="todo"
-//           placeholder="Add todo..."
-//           value={todo}
-//           onChange={e => setTodo(e.target.value)}
-//         />
-//       </div>
-//       <div className={styles.form__category}>
-//         <label htmlFor="todo">Category</label>
-//         <select
-//           name="categories"
-//           id="categories"
-//           value={category}
-//           onChange={e => setCategory(e.target.value)}
-//         >
-//           <option value="">--Select a category--</option>
-//           <option value="work">For Work</option>
-//           <option value="home">For Home</option>
-//           <option value="to-buy">To buy</option>
-//         </select>
-//       </div>
-//       <button>Add</button>
-//     </form>
-//   );
-// };
-
-// export default ToDoForm;
+//to change:
+//custom component for inputs?
 
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -79,14 +7,10 @@ import styles from './css/ToDoForm.module.css';
 import { editIcon } from '../helpers/icons';
 import Button from './UI/Button';
 import EditCategory from './EditCategory/EditCategory';
+import { checkNameValidity } from '../helpers/checkNameValidity';
 
-const checkValidity = value => {
-  if (value.trim() === '') {
-    return false;
-  }
-  return true;
-};
-
+//this component is used twice in the app -
+//- as a form for the new todo and as a form for editing existing todo
 const ToDoForm = ({
   initialTodo,
   initialCategory,
@@ -99,19 +23,19 @@ const ToDoForm = ({
   const [category, setCategory] = useState(initialCategory);
   const [isEditingCategory, setIsEditingCategory] = useState(false);
 
-  const [isTodoNOK, setIsTodoNOK] = useState(false);
-  const [isCategoryNOK, setIsCategoryNOK] = useState(false);
+  const [isTodoOK, setIsTodoOK] = useState(true);
+  const [isCategoryOK, setIsCategoryOK] = useState(true);
 
   const categories = useSelector(state => state.categories.categories);
 
-  const handleTodoChange = e => {
+  const handleChangeTodo = e => {
     setTodo(e.target.value);
-    setIsTodoNOK(false);
+    setIsTodoOK(true);
   };
 
-  const handleCategoryChange = e => {
+  const handleChangeCategory = e => {
     setCategory(e.target.value);
-    setIsCategoryNOK(false);
+    setIsCategoryOK(true);
   };
 
   const handleOpenEditCategory = () => setIsEditingCategory(true);
@@ -120,25 +44,30 @@ const ToDoForm = ({
 
   const handleSubmit = e => {
     e.preventDefault();
-    const isTodoValid = checkValidity(todo);
-    const isCategoryValid = checkValidity(category);
 
-    isTodoValid ? setIsTodoNOK(false) : setIsTodoNOK(true);
+    //checking validity of both todo and category
+    const isTodoValid = checkNameValidity(todo);
+    const isCategoryValid = checkNameValidity(category);
 
-    isCategoryValid ? setIsCategoryNOK(false) : setIsCategoryNOK(true);
+    //upadating state of validity for the purpose of styling
+    isTodoValid ? setIsTodoOK(true) : setIsTodoOK(false);
+    isCategoryValid ? setIsCategoryOK(true) : setIsCategoryOK(false);
 
     if (!isTodoValid || !isCategoryValid) return;
 
+    //submiting using a props function
     onSubmit(todo, category);
 
+    //reseting
     setTodo('');
     setCategory('');
-    setIsTodoNOK(false);
-    setIsCategoryNOK(false);
+    setIsTodoOK(true);
+    setIsCategoryOK(true);
 
     onCloseForm && onCloseForm();
   };
 
+  //content is displaying two different strings depending if there are any categories set up
   const catDefaultContent =
     categories.length > 0
       ? '--Select category--'
@@ -150,23 +79,23 @@ const ToDoForm = ({
         <div className={styles.form__todo}>
           <label htmlFor='todo'>To do: </label>
           <input
-            className={isTodoNOK ? styles.error : ''}
+            className={isTodoOK ? '' : styles.error}
             type='text'
             id='todo'
             name='todo'
             placeholder='Add todo...'
             value={todo}
-            onChange={handleTodoChange}
+            onChange={handleChangeTodo}
           />
         </div>
         <div className={styles.form__category}>
           <label htmlFor='category'>Category</label>
           <select
-            className={isCategoryNOK ? styles.error : ''}
+            className={isCategoryOK ? '' : styles.error}
             name='category'
             id='category'
             value={category}
-            onChange={handleCategoryChange}
+            onChange={handleChangeCategory}
           >
             <option value=''>{catDefaultContent}</option>
             {categories.map((cat, index) => (
@@ -176,7 +105,7 @@ const ToDoForm = ({
             ))}
           </select>
         </div>
-        {}
+
       </div>
       <div className={styles.form__actions}>
         {isCancelBtn && (
@@ -196,6 +125,8 @@ const ToDoForm = ({
           onClick={handleOpenEditCategory}
         />
       </div>
+
+      {/* displaying modal for editing categories */}
       {isEditingCategory && <EditCategory onClose={handleCloseEditCategory} />}
     </form>
   );

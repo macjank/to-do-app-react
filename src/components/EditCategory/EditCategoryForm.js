@@ -4,13 +4,7 @@ import { useDispatch } from 'react-redux';
 import { categoriesActions } from '../../store/categories-slice';
 import Button from '../UI/Button';
 import styles from '../css/EditCategoryForm.module.css';
-
-const checkValidity = value => {
-  if (value.trim() === '') {
-    return false;
-  }
-  return true;
-};
+import { checkNameValidity } from '../../helpers/checkNameValidity';
 
 const EditCategoryForm = ({ onClose }) => {
   const [isNewCategoryNOK, setIsNewCategoryNOK] = useState(false);
@@ -20,13 +14,13 @@ const EditCategoryForm = ({ onClose }) => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    const isNewCategoryValid = checkValidity(categoryRef.current.value);
+    const isNewCategoryValid = checkNameValidity(categoryRef.current.value);
     setIsNewCategoryNOK(!isNewCategoryValid);
 
     if (!isNewCategoryValid) return;
 
     dispatch(categoriesActions.addCategory(categoryRef.current.value));
-    onClose();
+    categoryRef.current.value = '';
   };
 
   return (
@@ -39,7 +33,10 @@ const EditCategoryForm = ({ onClose }) => {
         name='category'
         ref={categoryRef}
       />
-      <Button content='Save' onClick={handleSubmit} />
+      <div className={styles.btnContainer}>
+        <Button type='button' content='Cancel' onClick={onClose} />
+        <Button content='Save' onClick={handleSubmit} />
+      </div>
     </form>
   );
 };
