@@ -45,9 +45,7 @@ export const sendTodosData = todos => {
       );
 
       if (!response.ok) {
-        throw new Error(
-          'Connecting to the server has failed. Your data might not be synchronized'
-        );
+        throw new Error('Sending data to the server has failed');
       }
     };
 
@@ -56,9 +54,7 @@ export const sendTodosData = todos => {
     } catch (error) {
       console.log(error);
       dispatch(
-        errorActions.activateError(
-          'Connecting to the server has failed. Your data might not be synchronized'
-        )
+        errorActions.activateError('Sending data to the server has failed')
       );
     }
   };

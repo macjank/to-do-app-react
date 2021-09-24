@@ -3,7 +3,7 @@ import styles from '../css/CategoryList.module.css';
 import Card from '../UI/Card';
 import CategoryItem from './CategoryItem';
 
-const CategoryList = () => {
+const CategoryList = ({ onChangeCategory, onClose }) => {
   const categories = useSelector(state => state.categories.categories);
   console.log(categories);
 
@@ -17,20 +17,15 @@ const CategoryList = () => {
     );
   }
 
-  // if (categories.length > 0) {
-  //   content = (
-  //     <ul className={styles.list}>
-  //       {categories.map((cat, index) => (
-  //         <CategoryItem key={index} cat={cat} />
-  //       ))}
-  //     </ul>
-  //   );
-  // }
-
   return (
     <ul className={styles.list}>
       {categories.map((cat, index) => (
-        <CategoryItem key={index} cat={cat} />
+        <CategoryItem
+          key={index}
+          cat={cat}
+          onChangeCategory={onChangeCategory}
+          onClose={onClose}
+        />
       ))}
     </ul>
   );

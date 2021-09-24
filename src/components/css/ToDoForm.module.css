@@ -28,7 +28,9 @@
   padding: 1em;
 }
 
-
+.form__todo input {
+  width: 80%;
+}
 
 .form__actions {
   padding: 2em;
@@ -63,12 +65,8 @@
   }
 
   .form__todo, .form__category {
-    padding: 1em;
-    width: 100%;
-    max-width: 600px;
+    padding: 1em
   }
-
-
 
   .form__actions {
     padding: 0.5em;
