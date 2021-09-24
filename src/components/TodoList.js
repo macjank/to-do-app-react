@@ -9,7 +9,7 @@ import TodoListHeader from './TodoListHeader';
 
 const TodoList = ({ done, header, todos }) => {
   //state
-  const isLoading = useSelector(state => state.todos.isLoading);
+  const isLoading = useSelector(state => state.loading.isLoading);
   const isError = useSelector(state => state.error.isError);
   const errorInfo = useSelector(state => state.error.errorInfo);
   //displaying all categories by default
@@ -34,6 +34,7 @@ const TodoList = ({ done, header, todos }) => {
 
   let content;
 
+  //different content outputs in case of: 1. loading, 2. error, 3. empty array, 4. default todo array to show
   if (isLoading) {
     //loading animation
     content = (
@@ -49,18 +50,21 @@ const TodoList = ({ done, header, todos }) => {
       </Card>
     );
   } else if (isError) {
+    //error info
     content = (
       <Card backgroundColor='#fff'>
         <div className={styles.empty}>{errorInfo}</div>
       </Card>
     );
   } else if (numOfTodos === 0) {
+    //empty todos array
     content = (
       <Card backgroundColor='#fff'>
         <div className={styles.empty}>The list is empty</div>
       </Card>
     );
   } else {
+    //default
     content = (
       <ul className={styles.list}>
         {todosToShow.map(todo => {

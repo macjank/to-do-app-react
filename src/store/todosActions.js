@@ -1,11 +1,12 @@
 import { todosActions } from './todos-slice';
 import { errorActions } from './error-slice';
+import { loadingActions } from './loading-slice';
 
 export const getTodosData = () => {
   return async dispatch => {
     const sendRequest = async () => {
       dispatch(errorActions.deactivateError());
-      dispatch(todosActions.activateLoading());
+      dispatch(loadingActions.activateLoading());
       const response = await fetch(
         'https://to-do-app-react-52fdc-default-rtdb.firebaseio.com/todos.json'
       );
@@ -21,9 +22,9 @@ export const getTodosData = () => {
     try {
       const todosData = await sendRequest();
       dispatch(todosActions.replaceTodos(todosData));
-      dispatch(todosActions.deactivateLoading());
+      dispatch(loadingActions.deactivateLoading());
     } catch (error) {
-      dispatch(todosActions.deactivateLoading());
+      dispatch(loadingActions.deactivateLoading());
       dispatch(
         errorActions.activateError('Getting data from the server has failed')
       );
