@@ -89,7 +89,7 @@ const ToDoForm = ({
           />
         </div>
         <div className={styles.form__category}>
-          <label htmlFor='category'>Category</label>
+          <label htmlFor='category'>Category:</label>
           <select
             className={isCategoryOK ? '' : styles.error}
             name='category'
