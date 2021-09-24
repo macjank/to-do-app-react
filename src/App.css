@@ -1,6 +1,17 @@
 .App {
-  max-width: 800px;
-  width: 70%;
-  margin: auto;
-  margin-top: 4em;
+  max-width: 1000px;
+  width: 80%;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: var(--primary-color);
+
+}
+
+@media screen and (max-width: 900px) {
+  .App {
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
 }

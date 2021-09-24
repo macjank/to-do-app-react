@@ -57,7 +57,7 @@ function App() {
 
   return (
     <div className='App'>
-      <Card backgroundColor={'var(--primary-color)'}>
+     
         <ToDoForm
           initialTodo=''
           initialCategory=''
@@ -65,7 +65,7 @@ function App() {
           submitBtnContent='Add'
         />
         <TodoSection />
-      </Card>
+     
     </div>
   );
 }
