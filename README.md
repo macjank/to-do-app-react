@@ -18,6 +18,7 @@ https://competent-nightingale-be1862.netlify.app/
 - Firebase 
 
 ## Setup
+You can clone the repository and run `npm install`
 
 In the project directory, you can run:
 
